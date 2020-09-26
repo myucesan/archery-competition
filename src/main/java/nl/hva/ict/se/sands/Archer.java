@@ -14,7 +14,14 @@ public class Archer {
     public final static int MAX_ARROWS = 3;
     public final static int MAX_ROUNDS = 10;
     private static Random randomizer = new Random();
-    private int id; // Once assigned a value this attribute is not allowed to change.
+    private final int id; // Once assigned a value this attribute is not allowed to change.
+    private static int idNumbering = 135787;
+    private String firstName;
+    private String lastName;
+    private int totalScore;
+    private int numberOfNines;
+    private int numberOfTens;
+    private Map<Integer, int[]> scores = new HashMap<Integer, int[]>();
 
     /**
      * Constructs a new instance of Archer and assigns a unique ID to the instance. The ID is not allowed to ever
@@ -26,6 +33,10 @@ public class Archer {
      * @param lastName the archers surname.
      */
     protected Archer(String firstName, String lastName) {
+        this.id = idNumbering + 1;
+        idNumbering++;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     /**
@@ -36,10 +47,22 @@ public class Archer {
      * @param points the points shot during the round.
      */
     public void registerScoreForRound(int round, int[] points) {
+        scores.put(round + 1, points);
+        for (int point : points) {
+            totalScore += point;
+
+            if (point == 9) {numberOfNines++;}
+            if (point == 10) {numberOfTens++;}
+
+        }
+    }
+
+    public Map<Integer, int[]> getScores() {
+        return scores;
     }
 
     public int getTotalScore() {
-        return 0;
+        return this.totalScore;
     }
 
     /**
@@ -47,7 +70,7 @@ public class Archer {
      * @return the number of 10's for this archer.
      */
     public int getTens() {
-        return 0;
+        return this.numberOfTens;
     }
 
     /**
@@ -55,12 +78,17 @@ public class Archer {
      * @return the number of 9's for this archer.
      */
     public int getNines() {
-        return 0;
+        return this.numberOfNines;
     }
 
     public int getId() {
         return id;
     }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
 
     /*
     The code below is their for your own convenience. You don't have include it in your report.
@@ -101,4 +129,11 @@ public class Archer {
     private static int shootArrow() {
         return 1 + randomizer.nextInt(10);
     }
+
+    @Override
+    public String toString() {
+        return this.id + " (" + this.totalScore + ") " + this.firstName + " " + this.lastName;
+    }
 }
+
+
