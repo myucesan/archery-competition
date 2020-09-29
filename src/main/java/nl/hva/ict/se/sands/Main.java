@@ -10,9 +10,7 @@ public class Main {
         List<Archer> archersList = Archer.generateArchers(100);
 
         for (Archer a : archersList) {
-
             System.out.println(a.toString());
-
         }
 
     }

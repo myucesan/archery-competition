@@ -11,8 +11,17 @@ import java.util.List;
 public class ChampionSelector {
     /**
      * This method uses either selection sort or insertion sort for sorting the archers.
+     * Selection sort
      */
     public static List<Archer> selInsSort(List<Archer> archers, Comparator<Archer> scoringScheme) {
+        int N = archers.size();
+        for (int i = 0; i < N; i++)
+        {
+            int min = i;
+            for (int j = i+1; j < N; j++)
+                if (less(archers.get(j), archers.get(min))) min = j;
+            exch(archers, i, min);
+        }
         return archers;
     }
 
@@ -29,4 +38,11 @@ public class ChampionSelector {
     public static List<Archer> collectionSort(List<Archer> archers, Comparator<Archer> scoringScheme) {
         return archers;
     }
+
+    private static boolean less(Archer v, Archer w)
+    { return v.compareTo(w) < 0; }
+
+    private static void exch(List<Archer> a, int i, int j)
+    { Archer t = a.get(i); a.set(i, a.get(j)); a.set(j, t); }
+
 }
