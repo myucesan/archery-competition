@@ -1,52 +1,81 @@
 package nl.hva.ict.se.sands;
 
 import java.sql.SQLOutput;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
-// TODO: quick sort implementeren
-// TODO: Collection sort gewoon
-// TODO: Measure runtime and performance (efficiency) of every algorithm
-// TODO: make a report
 public class Main {
 
+    static List<Archer> archerList1 = null;
+    static List<Archer> archerList2 = null;
+    static List<Archer> archerList3 = null;
 
+    // FIXME: One list of nr has to be deep cloned so the same list is sorted thrice by three algorithms
+    // FIXME: heap space error if i creating three list of archers multiple times, so one list should be created that is deep cloned twice
+    final static int MAX_ARCHERS = 5000000;
     public static void main(String[] args) {
-        List<Archer> archersList = Archer.generateArchers(100);
-        List<Archer> archersListQS = Archer.generateArchers(1000);
-        List<Archer> archersListCS = Archer.generateArchers(1000);
-        ScoreComparator sc = new ScoreComparator();
+        int nrOfArchers =  100;
+        double totalTimeSelSort = 0;
+        double totalTimeQS = 0;
+        double totalTimeCS = 0;
+        double totalTimeAll = 0;
+        while(nrOfArchers <= MAX_ARCHERS) { // FIXME: has to stop after 20 seconds
+            System.out.printf("Nr of archers: %d \n", nrOfArchers);
+            archerList1 = Archer.generateArchers(nrOfArchers);
+//            archerList2 = Archer.generateArchers(nrOfArchers);
+//            archerList3 = Archer.generateArchers(nrOfArchers);
+//            double timeTakenselSort = Efficiency.selSortEfficiency(archerList1, nrOfArchers);
+            double timeTakenQS = Efficiency.quickSortEfficiency(archerList1, nrOfArchers);
+            double timeTakenCS = Efficiency.colSortEfficiency(archerList2, nrOfArchers);
+//            System.out.printf("Time taken with selection sort with %d archers: %.2f seconds \n", nrOfArchers , timeTakenselSort);
+            System.out.printf("Time taken with quick sort with %d archers: %.2f seconds \n", nrOfArchers , timeTakenQS);
+            System.out.printf("Time taken with collection sort with %d archers: %.2f seconds \n", nrOfArchers , timeTakenCS);
+            nrOfArchers = nrOfArchers * 2;
+//            totalTimeSelSort += timeTakenselSort;
+            totalTimeQS += timeTakenQS;
+            totalTimeCS += timeTakenCS;
+            totalTimeAll = totalTimeAll + totalTimeSelSort + totalTimeQS + totalTimeCS;
+        }
+        System.out.println();
+        System.out.printf("Total time taken to selection sort: %.2f \n", totalTimeSelSort);
+        System.out.printf("Total time taken to quick sort: %.2f \n", totalTimeQS);
+        System.out.printf("Total time taken to collection sort: %.2f \n", totalTimeCS);
+        System.out.printf("Total time taken to sort: %.2f \n", totalTimeAll);
 
-        long startTimeSelectionSort = System.nanoTime();
-        long startTimeQuick = System.nanoTime();
-        long startTimeCS = System.nanoTime();
-
-        archersList = ChampionSelector.selInsSort(archersList, sc);
-        archersListQS = ChampionSelector.quickSort(archersList, sc);
-        archersListCS = ChampionSelector.collectionSort(archersList, sc);
-
-        for (Archer a : archersList)
-            System.out.println(a.toString());
-
-        long stopTimeSelectionsort = System.nanoTime();
-        System.out.println("Time in nano seconds: " + (stopTimeSelectionsort - startTimeSelectionSort));
-
-        System.out.println("--------------------------------------------------------------------------------------");
-
-        for (Archer a : archersListQS)
-            System.out.println(a.toString());
-
-        long stopTimeQuick = System.nanoTime();
-        System.out.println("Time in nano seconds: " + (stopTimeQuick - startTimeQuick));
-
-        System.out.println("--------------------------------------------------------------------------------------");
-
-        for (Archer a : archersListCS)
-            System.out.println(a.toString());
-
-        long stopTimeCS = System.nanoTime();
-        System.out.println("Time in nano seconds: " + (stopTimeCS - startTimeCS));
+//        List<Archer> archersList = Archer.generateArchers(100);
+//        List<Archer> archersListQS = Archer.generateArchers(1000);
+//        List<Archer> archersListCS = Archer.generateArchers(1000);
+//        ScoreComparator sc = new ScoreComparator();
+//
+//        long startTimeSelectionSort = System.nanoTime();
+//        long startTimeQuick = System.nanoTime();
+//        long startTimeCS = System.nanoTime();
+//
+//        archersList = ChampionSelector.selInsSort(archersList, sc);
+//        archersListQS = ChampionSelector.quickSort(archersList, sc);
+//        archersListCS = ChampionSelector.collectionSort(archersList, sc);
+//
+//        for (Archer a : archersList)
+//            System.out.println(a.toString());
+//
+//        long stopTimeSelectionsort = System.nanoTime();
+//        System.out.println("Time in nano seconds: " + (stopTimeSelectionsort - startTimeSelectionSort));
+//
+//        System.out.println("--------------------------------------------------------------------------------------");
+//
+//        for (Archer a : archersListQS)
+//            System.out.println(a.toString());
+//
+//        long stopTimeQuick = System.nanoTime();
+//        System.out.println("Time in nano seconds: " + (stopTimeQuick - startTimeQuick));
+//
+//        System.out.println("--------------------------------------------------------------------------------------");
+//
+//        for (Archer a : archersListCS)
+//            System.out.println(a.toString());
+//
+//        long stopTimeCS = System.nanoTime();
+//        System.out.println("Time in nano seconds: " + (stopTimeCS - startTimeCS));
 
         }
 
