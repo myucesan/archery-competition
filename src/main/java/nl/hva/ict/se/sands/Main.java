@@ -1,6 +1,7 @@
 package nl.hva.ict.se.sands;
 
 import java.sql.SQLOutput;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -8,12 +9,12 @@ public class Main {
 
     public static void main(String[] args) {
         List<Archer> archersList = Archer.generateArchers(100);
+        ScoreComparator sc = new ScoreComparator();
+        archersList = ChampionSelector.selInsSort(archersList, sc);
 
-        for (Archer a : archersList) {
+        for (Archer a : archersList)
             System.out.println(a.toString());
         }
-
-    }
 
     public static void listScores(List<Archer> archersList) {
         for (Archer a : archersList) {
