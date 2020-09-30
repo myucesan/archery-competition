@@ -9,7 +9,7 @@ import java.util.List;
  * Note that you are NOT allowed to change the signature of these methods! Adding method is perfectly fine.
  *
  * @author Costa van Elsas, 500782594
- * @author Mustafa Yücesan, "studentnummer"
+ * @author Mustafa Yücesan, 500769574
  */
 public class ChampionSelector {
 

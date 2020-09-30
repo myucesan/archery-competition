@@ -1,46 +1,46 @@
+package nl.hva.ict.se.sands;
+
 /******************************************************************************
- *  Compilation:  javac StopwatchCPU.java
- *  Execution:    java StopwtachCPU n
+ *  Compilation:  javac Stopwatch.java
+ *  Execution:    java Stopwatch n
  *  Dependencies: none
  *
- *  A version of Stopwatch.java that measures CPU time on a single
- *  core or processor (instead of wall clock time).
+ *  A utility class to measure the running time (wall clock) of a program.
  *
- *  % java8 StopwatchCPU 100000000
- *  6.666667e+11 (1.05 seconds)
- *  6.666667e+11 (7.50 seconds)
+ *  % java8 Stopwatch 100000000
+ *  6.666667e+11  0.5820 seconds
+ *  6.666667e+11  8.4530 seconds
  *
  ******************************************************************************/
 
-package nl.hva.ict.se.sands;
-import java.lang.management.ThreadMXBean;
-import java.lang.management.ManagementFactory;
+
 
 /**
- *  The {@code StopwatchCPU} data type is for measuring
- *  the CPU time used during a programming task.
+ *  The {@code Stopwatch} data type is for measuring
+ *  the time that elapses between the start and end of a
+ *  programming task (wall-clock time).
  *
- *  See Stopwatch for a version that measures wall-clock time
- *  (the real time that elapses).
+ *  See for a version that measures CPU time.
+ *  For additional documentation,
+ *  see <a href="https://algs4.cs.princeton.edu/14analysis">Section 1.4</a> of
+ *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *
- *  @author Josh Hug
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
 
-public class Stopwatch {
-    private static final double NANOSECONDS_PER_SECOND = 1000000000;
 
-    private final ThreadMXBean threadTimer;
+public class Stopwatch {
+
     private final long start;
 
     /**
      * Initializes a new stopwatch.
      */
     public Stopwatch() {
-        threadTimer = ManagementFactory.getThreadMXBean();
-        start = threadTimer.getCurrentThreadCpuTime();
+        start = System.currentTimeMillis();
     }
+
 
     /**
      * Returns the elapsed CPU time (in seconds) since the stopwatch was created.
@@ -48,12 +48,13 @@ public class Stopwatch {
      * @return elapsed CPU time (in seconds) since the stopwatch was created
      */
     public double elapsedTime() {
-        long now = threadTimer.getCurrentThreadCpuTime();
-        return (now - start) / NANOSECONDS_PER_SECOND;
+        long now = System.currentTimeMillis();
+        return (now - start) / 1000.0;
     }
 
+
     /**
-     * Unit tests the {@code StopwatchCPU} data type.
+     * Unit tests the {@code Stopwatch} data type.
      * Takes a command-line argument {@code n} and computes the
      * sum of the square roots of the first {@code n} positive integers,
      * first using {@code Math.sqrt()}, then using {@code Math.pow()}.

@@ -14,27 +14,31 @@ public class Efficiency {
     }
     public static double selSortEfficiency(List<Archer> archerList, int nrOfArchers) {
         createComparator();
-        Stopwatch stopwatch = new Stopwatch();
+        Stopwatch s1 = new Stopwatch();
         archerList = ChampionSelector.selInsSort(archerList, comparator);
-        double timeTaken = stopwatch.elapsedTime();
+        double timeElapsed = s1.elapsedTime();
+        double timeTaken = timeElapsed;
 
         return timeTaken;
     }
 
     public static double quickSortEfficiency(List<Archer> archerList, int nrOfArchers) {
         createComparator();
-        Stopwatch stopwatch = new Stopwatch();
+        Stopwatch s2 = new Stopwatch();
         archerList = ChampionSelector.quickSort(archerList, comparator);
-        double timeTaken = stopwatch.elapsedTime();
+        double timeElapsed = s2.elapsedTime();
+
+        double timeTaken = timeElapsed;
 
         return timeTaken;
     }
 
     public static double colSortEfficiency(List<Archer> archerList, int nrOfArchers) {
         createComparator();
-        Stopwatch stopwatch = new Stopwatch();
+        Stopwatch s3 = new Stopwatch();
         archerList = ChampionSelector.collectionSort(archerList, comparator);
-        double timeTaken = stopwatch.elapsedTime();
+        double timeElapsed = s3.elapsedTime();
+        double timeTaken = timeElapsed;
 
         return timeTaken;
     }

@@ -6,10 +6,6 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    static List<Archer> archerList1 = null;
-    static List<Archer> archerList2 = null;
-    static List<Archer> archerList3 = null;
-
     // FIXME: One list of nr has to be deep cloned so the same list is sorted thrice by three algorithms
     // FIXME: heap space error if i creating three list of archers multiple times, so one list should be created that is deep cloned twice
     final static int MAX_ARCHERS = 5000000;
@@ -19,17 +15,20 @@ public class Main {
         double totalTimeQS = 0;
         double totalTimeCS = 0;
         double totalTimeAll = 0;
-        while(nrOfArchers <= MAX_ARCHERS) { // FIXME: has to stop after 20 seconds
+        while(nrOfArchers <= MAX_ARCHERS) {
             System.out.printf("Nr of archers: %d \n", nrOfArchers);
-            archerList1 = Archer.generateArchers(nrOfArchers);
-//            archerList2 = Archer.generateArchers(nrOfArchers);
-//            archerList3 = Archer.generateArchers(nrOfArchers);
-//            double timeTakenselSort = Efficiency.selSortEfficiency(archerList1, nrOfArchers);
-            double timeTakenQS = Efficiency.quickSortEfficiency(archerList1, nrOfArchers);
-            double timeTakenCS = Efficiency.colSortEfficiency(archerList2, nrOfArchers);
-//            System.out.printf("Time taken with selection sort with %d archers: %.2f seconds \n", nrOfArchers , timeTakenselSort);
-            System.out.printf("Time taken with quick sort with %d archers: %.2f seconds \n", nrOfArchers , timeTakenQS);
-            System.out.printf("Time taken with collection sort with %d archers: %.2f seconds \n", nrOfArchers , timeTakenCS);
+            List<Archer> archerList1 = Arrays.asList(new Archer[nrOfArchers]);;
+            List<Archer> archerList2 = Archer.generateArchers(nrOfArchers);
+            List<Archer> archerList3 = Arrays.asList(new Archer[nrOfArchers]);
+            Collections.copy(archerList1, archerList2);
+            Collections.copy(archerList3, archerList2);
+
+            double timeTakenselSort = Efficiency.selSortEfficiency(archerList1, nrOfArchers);
+            double timeTakenQS = Efficiency.quickSortEfficiency(archerList2, nrOfArchers);
+            double timeTakenCS = Efficiency.colSortEfficiency(archerList3, nrOfArchers);
+            System.out.printf("Time taken with selection sort with %d archers: %.2f milliseconds \n", nrOfArchers , timeTakenselSort);
+            System.out.printf("Time taken with quick sort with %d archers: %.2f milliseconds \n", nrOfArchers , timeTakenQS);
+            System.out.printf("Time taken with collection sort with %d archers: %.2f milliseconds \n", nrOfArchers , timeTakenCS);
             nrOfArchers = nrOfArchers * 2;
 //            totalTimeSelSort += timeTakenselSort;
             totalTimeQS += timeTakenQS;
