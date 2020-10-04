@@ -2,34 +2,25 @@ package nl.hva.ict.se.sands;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Array;
-import java.sql.SQLOutput;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 public class Main {
 
     final static int MAX_ARCHERS = 5000000;
     final static int MAX_MILLISECONDS = 20000; // 20 seconds
-    static int measurementRound;
+
     public static void main(String[] args) throws IOException {
         int nrOfArchers = 100;
-
 
         double selSortTime = 0;
         double quickSortTime = 0;
         double colSortTime = 0;
 
-
-
-
-        Stopwatch selSortTracker = null;
-        Stopwatch quickSortTracker = new Stopwatch();
-        Stopwatch colSortTracker = new Stopwatch();
+        Stopwatch selSortTracker;
+        Stopwatch quickSortTracker;
+        Stopwatch colSortTracker;
         // these booleans are used to stop execution of a sorting algorithm when it starts to take 20 seconds
         boolean selSortRunning= true;
         boolean quickSortRunning = true;
@@ -48,59 +39,71 @@ public class Main {
 
             System.out.printf("Number of archers: %d \n", nrOfArchers);
             if (selSortRunning) {
-                selSortTracker = new Stopwatch();
+                selSortTracker = new Stopwatch();  // stopwatch created to keep track of how long this sorting is running
                 selSortTime = Efficiency.selSortEfficiency(selSortList);
                 System.out.printf("Selection sort: %.2f \n", selSortTime);
                 if (selSortTracker.elapsedTime() >= MAX_MILLISECONDS) {
-                    selSortRunning = false;
+                    selSortRunning = false;  // if the sorting took more than 20 seconds this is set to false so this sorting is not executed anymore
                 }
             }
 
             if (quickSortRunning) {
-                quickSortTracker = new Stopwatch();
+                quickSortTracker = new Stopwatch();  // stopwatch created to keep track of how long this sorting is running
                 quickSortTime = Efficiency.quickSortEfficiency(quickSortList);
                 if (quickSortTracker.elapsedTime() >= MAX_MILLISECONDS) {
-                    quickSortRunning = false;
+                    quickSortRunning = false;  // if the sorting took more than 20 seconds this is set to false so this sorting is not executed anymore
                 }
                 System.out.printf("QuickSort sort: %.2f \n", quickSortTime);
             }
             if (colSortRunning) {
-                colSortTracker = new Stopwatch();
+                colSortTracker = new Stopwatch();  // stopwatch created to keep track of how long this sorting is running
                 colSortTime = Efficiency.colSortEfficiency(colSortList);
                 if (colSortTracker.elapsedTime() >= MAX_MILLISECONDS) {
-                    colSortRunning = false;
+                    colSortRunning = false;  // if the sorting took more than 20 seconds this is set to false so this sorting is not executed anymore
                 }
                 System.out.printf("Collection sort: %.2f \n", colSortTime);
             }
             System.out.println();
-            measurementsToCsv(nrOfArchers, selSortTime, quickSortTime, colSortTime);
+            measurementsToCsv(nrOfArchers, selSortTime, quickSortTime, colSortTime);  // writes measures to csv file
             nrOfArchers *= 2;
 
         }
 
     }
 
+// Code below is used for storing the scores in csv files for reporting convenience. Can be ignored.
 
     static FileWriter out;
     static CSVPrinter csvPrinter;
 
     static {
         try {
-            out = new FileWriter("measurements-xint-1.csv");
+            out = new FileWriter("measurements.csv");
             csvPrinter = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader("Number of Archers", "Selection Sort times", "Quick Sort times", "Collection sort times"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
+    /**
+     * Writes record to csv file
+     *
+     * @param nrOfArchers - number of archers sorted
+     * @param selSortTime - time it took to selection sort
+     * @param quickSortTime - time it took to selection sort
+     * @param colSortTime - time it took to selection sort
+     */
     static void measurementsToCsv(int nrOfArchers, double selSortTime, double quickSortTime, double colSortTime) throws IOException {
 
         csvPrinter.printRecord(nrOfArchers, selSortTime, quickSortTime, colSortTime);
         csvPrinter.flush();
     }
 
-
+    /**
+     * Prints the list values (used to check values)
+     *
+     * @param archersList - list with archers
+     */
     public static void listScores(List<Archer> archersList) {
         for (Archer a : archersList) {
             System.out.println(a.getFullName() + " (" + a.getId() + ")");

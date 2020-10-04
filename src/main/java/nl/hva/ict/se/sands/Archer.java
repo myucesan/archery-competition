@@ -70,7 +70,10 @@ public class Archer {
 
         }
     }
-
+    /**
+     * Returns the score
+     * @return the Map with the scores
+     */
     public Map<Integer, int[]> getScores() {
         return scores;
     }
@@ -95,10 +98,18 @@ public class Archer {
         return this.numberOfNines;
     }
 
+    /**
+     * Returns the id of this archer.
+     * @return the id of this archer..
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Returns the the full name of the archer
+     * @return the full name of the archer
+     */
     public String getFullName() {
         return firstName + " " + lastName;
     }

@@ -10,6 +10,12 @@ public class Efficiency {
     public static void createComparator() {
         comparator = new ScoreComparator();
     }
+
+    /**
+     * Sorts the given list using selection sort
+     *
+     * @param archerList the list with archers
+     */
     public static double selSortEfficiency(List<Archer> archerList) {
         createComparator();
         Stopwatch s1 = new Stopwatch();
@@ -20,10 +26,15 @@ public class Efficiency {
         return timeTaken;
     }
 
-    public static double quickSortEfficiency(List<Archer> archerList2) {
+    /**
+     * Sorts the given list using quickSort
+     *
+     * @param archerList the list with archers
+     */
+    public static double quickSortEfficiency(List<Archer> archerList) {
         createComparator();
         Stopwatch s2 = new Stopwatch();
-        ChampionSelector.quickSort(archerList2, comparator);
+        ChampionSelector.quickSort(archerList, comparator);
         double timeElapsed = s2.elapsedTime();
 
         double timeTaken = timeElapsed;
@@ -31,10 +42,15 @@ public class Efficiency {
         return timeTaken;
     }
 
-    public static double colSortEfficiency(List<Archer> archerList3) {
+    /**
+     * Sorts the given list using Collection.sort()
+     *
+     * @param archerList the list with archers
+     */
+    public static double colSortEfficiency(List<Archer> archerList) {
         createComparator();
         Stopwatch s3 = new Stopwatch();
-        ChampionSelector.collectionSort(archerList3, comparator);
+        ChampionSelector.collectionSort(archerList, comparator);
         double timeElapsed = s3.elapsedTime();
         double timeTaken = timeElapsed;
 
