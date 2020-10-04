@@ -40,7 +40,7 @@ public class ChampionSelector {
 
     private static void sort(List<Archer> a, int lo, int hi, Comparator<Archer> scoringScheme) {
         if (hi <= lo) return;
-        int j = partition(a, lo, hi, scoringScheme); // Partition (see page 291).
+        int j = partition(a, lo, hi, scoringScheme);
         sort(a, lo, j-1, scoringScheme); // Sort left part a[lo .. j-1].
         sort(a, j+1, hi, scoringScheme); // Sort right part a[j+1 .. hi].
     }

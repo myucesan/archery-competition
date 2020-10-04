@@ -40,6 +40,20 @@ public class Archer {
     }
 
     /**
+     *  Added an extra constructor for the test class to test with points
+     * @param firstName the archers first name.
+     * @param lastName the archers surname.
+     * @param pts the archers points
+     */
+    protected Archer(String firstName, String lastName, int pts) {
+        this.id = idNumbering + 1; // sets the id to idNumbering + 1, so it starts at the preferred number (135788)
+        idNumbering++;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.totalScore = pts;
+    }
+
+    /**
      * Registers the point for each of the three arrows that have been shot during a round. The <code>points</code>
      * parameter should hold the three points, one per arrow.
      *
