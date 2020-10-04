@@ -30,7 +30,10 @@ public class Main {
         Stopwatch selSortTracker = null;
         Stopwatch quickSortTracker = new Stopwatch();
         Stopwatch colSortTracker = new Stopwatch();
+        // these booleans are used to stop execution of a sorting algorithm when it starts to take 20 seconds
         boolean selSortRunning= true;
+        boolean quickSortRunning = true;
+        boolean colSortRunning = true;
 
         while (nrOfArchers < MAX_ARCHERS) {
 
@@ -43,8 +46,8 @@ public class Main {
             Collections.copy(quickSortList, generatedList);
             Collections.copy(colSortList, generatedList);
 
+            System.out.printf("Number of archers: %d \n", nrOfArchers);
             if (selSortRunning) {
-                System.out.println(nrOfArchers);
                 selSortTracker = new Stopwatch();
                 selSortTime = Efficiency.selSortEfficiency(selSortList);
                 System.out.printf("Selection sort: %.2f \n", selSortTime);
@@ -53,17 +56,24 @@ public class Main {
                 }
             }
 
-            while(nrOfArchers < MAX_ARCHERS & quickSortTracker.elapsedTime() < MAX_MILLISECONDS) {
-                System.out.println(nrOfArchers);
+            if (quickSortRunning) {
+                quickSortTracker = new Stopwatch();
                 quickSortTime = Efficiency.quickSortEfficiency(quickSortList);
+                if (quickSortTracker.elapsedTime() >= MAX_MILLISECONDS) {
+                    quickSortRunning = false;
+                }
                 System.out.printf("QuickSort sort: %.2f \n", quickSortTime);
             }
-            while(nrOfArchers < MAX_ARCHERS & colSortTracker.elapsedTime() < MAX_MILLISECONDS) {
-                System.out.println(nrOfArchers);
+            if (colSortRunning) {
+                colSortTracker = new Stopwatch();
                 colSortTime = Efficiency.colSortEfficiency(colSortList);
+                if (colSortTracker.elapsedTime() >= MAX_MILLISECONDS) {
+                    colSortRunning = false;
+                }
                 System.out.printf("Collection sort: %.2f \n", colSortTime);
             }
-
+            System.out.println();
+            measurementsToCsv(nrOfArchers, selSortTime, quickSortTime, colSortTime);
             nrOfArchers *= 2;
 
         }
@@ -76,7 +86,7 @@ public class Main {
 
     static {
         try {
-            out = new FileWriter("measurements.csv", true);
+            out = new FileWriter("measurements-xint-1.csv");
             csvPrinter = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader("Number of Archers", "Selection Sort times", "Quick Sort times", "Collection sort times"));
         } catch (IOException e) {
             e.printStackTrace();
