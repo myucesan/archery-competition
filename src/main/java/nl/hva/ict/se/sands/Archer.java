@@ -33,7 +33,7 @@ public class Archer {
      * @param lastName the archers surname.
      */
     protected Archer(String firstName, String lastName) {
-        this.id = idNumbering + 1;
+        this.id = idNumbering + 1; // sets the id to idNumbering + 1, so it starts at the preferred number (135788)
         idNumbering++;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,8 +51,8 @@ public class Archer {
         for (int point : points) {
             totalScore += point;
 
-            if (point == 9) {numberOfNines++;}
-            if (point == 10) {numberOfTens++;}
+            if (point == 9) {numberOfNines++;} // increments numberOfNines by 1 so it has track over nines
+            if (point == 10) {numberOfTens++;} // increments numberOfNines by 1 so it has track over tens
 
         }
     }

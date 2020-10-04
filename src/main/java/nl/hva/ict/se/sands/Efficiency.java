@@ -7,25 +7,23 @@ import java.util.List;
 public class Efficiency {
 
     static Comparator<Archer> comparator;
-
-
     public static void createComparator() {
         comparator = new ScoreComparator();
     }
-    public static double selSortEfficiency(List<Archer> archerList, int nrOfArchers) {
+    public static double selSortEfficiency(List<Archer> archerList) {
         createComparator();
         Stopwatch s1 = new Stopwatch();
-        archerList = ChampionSelector.selInsSort(archerList, comparator);
+        ChampionSelector.selInsSort(archerList, comparator);
         double timeElapsed = s1.elapsedTime();
         double timeTaken = timeElapsed;
 
         return timeTaken;
     }
 
-    public static double quickSortEfficiency(List<Archer> archerList, int nrOfArchers) {
+    public static double quickSortEfficiency(List<Archer> archerList2) {
         createComparator();
         Stopwatch s2 = new Stopwatch();
-        archerList = ChampionSelector.quickSort(archerList, comparator);
+        ChampionSelector.quickSort(archerList2, comparator);
         double timeElapsed = s2.elapsedTime();
 
         double timeTaken = timeElapsed;
@@ -33,10 +31,10 @@ public class Efficiency {
         return timeTaken;
     }
 
-    public static double colSortEfficiency(List<Archer> archerList, int nrOfArchers) {
+    public static double colSortEfficiency(List<Archer> archerList3) {
         createComparator();
         Stopwatch s3 = new Stopwatch();
-        archerList = ChampionSelector.collectionSort(archerList, comparator);
+        ChampionSelector.collectionSort(archerList3, comparator);
         double timeElapsed = s3.elapsedTime();
         double timeTaken = timeElapsed;
 
