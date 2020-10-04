@@ -39,7 +39,7 @@ class ChampionSelectorTest {
         Archer testman1 = new Archer("testman1 ", "ja", 98);
         Archer testman2 = new Archer("testman1 ", "nee", 97);
 
-        List<Archer> players = Arrays.asList(costa, mustafa, testman1, testman2);
+        List<Archer> players = Arrays.asList(mustafa, testman1, testman2, costa);
         Archer[] sorted = ChampionSelector.quickSort(players, comparator).toArray(new Archer[0]);
 
         assertEquals(sorted[0], costa);
